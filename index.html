@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+  <title>Cartoon Cat Survivor</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#1e1b4b">
+  <link rel="icon" sizes="192x192" href="assets/icons/icon-192.png">
+  <link rel="icon" sizes="512x512" href="assets/icons/icon-512.png">
+  <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="ui">
+    <div class="hud">
+      <div class="hud-row">
+        <div class="hud-item"><span id="hpLabel">HP</span>: <span id="hpVal">100</span></div>
+        <div class="hud-item">LV: <span id="lvlVal">1</span></div>
+        <div class="hud-item">XP: <span id="xpVal">0%</span></div>
+        <div class="hud-item">
+          Skin:
+          <select id="skinSelect">
+            <option value="default">Default</option>
+            <option value="ninja">Ninja</option>
+            <option value="astro">Astro</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div id="levelUp" class="modal hidden">
+      <div class="modal-card">
+        <h2>Level Up!</h2>
+        <p>Choose a perk</p>
+        <div id="perkButtons" class="perk-grid"></div>
+        <button id="skipBtn" class="btn">Skip</button>
+      </div>
+    </div>
+  </div>
+  <canvas id="game" width="960" height="540"></canvas>
+  <script type="module" src="./src/main.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(e=>console.warn('SW failed', e));
+      });
+    }
+  </script>
+</body>
+</html>
