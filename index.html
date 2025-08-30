@@ -1,49 +1,121 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
-  <title>Cartoon Cat Survivor</title>
+  <title>Neko Swarm v3</title>
   <link rel="manifest" href="manifest.webmanifest">
-  <meta name="theme-color" content="#1e1b4b">
+  <meta name="theme-color" content="#0b122d">
   <link rel="icon" sizes="192x192" href="assets/icons/icon-192.png">
   <link rel="icon" sizes="512x512" href="assets/icons/icon-512.png">
   <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <canvas id="game" width="960" height="540"></canvas>
+
   <div id="ui">
-    <div class="hud">
-      <div class="hud-row">
-        <div class="hud-item"><span id="hpLabel">HP</span>: <span id="hpVal">100</span></div>
-        <div class="hud-item">LV: <span id="lvlVal">1</span></div>
-        <div class="hud-item">XP: <span id="xpVal">0%</span></div>
-        <div class="hud-item">
-          Skin:
-          <select id="skinSelect">
-            <option value="default">Default</option>
-            <option value="ninja">Ninja</option>
-            <option value="astro">Astro</option>
-          </select>
+    <div class="topbar">
+      <div class="left">
+        <span id="hpVal">HP 100/100</span>
+        <span id="lvlVal">LV 1</span>
+        <span id="xpVal">XP 0%</span>
+        <span id="formVal">Form: Cat</span>
+        <select id="skinSelect">
+          <option value="default">Default</option>
+          <option value="ninja">Ninja</option>
+          <option value="astro">Astro</option>
+          <option value="cowboy">Cowboy</option>
+          <option value="samurai">Samurai</option>
+        </select>
+        <select id="langSelect">
+          <option value="en">EN</option>
+          <option value="ja">日本語</option>
+        </select>
+      </div>
+      <div class="right">
+        <button id="btnMissions" class="btn ghost">🎯</button>
+        <button id="btnCollections" class="btn ghost">📚</button>
+        <button id="btnLeaderboard" class="btn ghost">🏆</button>
+        <button id="btnSettings" class="btn ghost">⚙️</button>
+      </div>
+    </div>
+
+    <div class="specials">
+      <button id="spMilk" class="sp">Milk Beam <span class="cd" id="cdMilk">READY</span></button>
+      <button id="spPunch" class="sp">Cat Punch <span class="cd" id="cdPunch">READY</span></button>
+      <button id="spCheese" class="sp">Cheese Trap <span class="cd" id="cdCheese">READY</span></button>
+    </div>
+
+    <div id="levelUp" class="modal hidden">
+      <div class="modal-card">
+        <h2 id="levelUpTitle">Level Up!</h2>
+        <p id="levelUpDesc">Choose one</p>
+        <div id="perkButtons" class="perk-grid"></div>
+        <button id="skipBtn" class="btn ghost">Skip</button>
+      </div>
+    </div>
+
+    <div id="collections" class="side-modal hidden">
+      <div class="side-card">
+        <div class="side-head">
+          <h2>Collections</h2>
+          <button id="closeCollections" class="btn ghost small">Close</button>
+        </div>
+        <div class="tabs">
+          <button class="tab active" data-tab="enemies">Enemies</button>
+          <button class="tab" data-tab="weapons">Weapons</button>
+          <button class="tab" data-tab="skins">Skins</button>
+        </div>
+        <div id="collectionBody" class="grid"></div>
+      </div>
+    </div>
+
+    <div id="missions" class="side-modal hidden">
+      <div class="side-card">
+        <div class="side-head">
+          <h2>Daily / Weekly</h2>
+          <button id="closeMissions" class="btn ghost small">Close</button>
+        </div>
+        <div id="missionBody" class="grid"></div>
+        <div class="missions-foot">
+          <button id="btnClaimAll" class="btn">Claim All</button>
         </div>
       </div>
     </div>
-    <div id="levelUp" class="modal hidden">
-      <div class="modal-card">
-        <h2>Level Up!</h2>
-        <p>Choose a perk</p>
-        <div id="perkButtons" class="perk-grid"></div>
-        <button id="skipBtn" class="btn">Skip</button>
+
+    <div id="leaderboard" class="side-modal hidden">
+      <div class="side-card">
+        <div class="side-head">
+          <h2>Leaderboard</h2>
+          <button id="closeLeaderboard" class="btn ghost small">Close</button>
+        </div>
+        <div id="lbBody" class="grid"></div>
+      </div>
+    </div>
+
+    <div id="settings" class="side-modal hidden">
+      <div class="side-card">
+        <div class="side-head">
+          <h2>Settings</h2>
+          <button id="closeSettings" class="btn ghost small">Close</button>
+        </div>
+        <div class="grid">
+          <div class="card"><div class="name">Music</div><div><input id="musicVol" type="range" min="0" max="1" step="0.01"/></div></div>
+          <div class="card"><div class="name">SFX</div><div><input id="sfxVol" type="range" min="0" max="1" step="0.01"/></div></div>
+          <div class="card"><div class="name">Language</div><div><select id="langSelect2"><option value="en">EN</option><option value="ja">日本語</option></select></div></div>
+          <div class="card"><div class="name">Reset Progress</div><button id="btnReset" class="btn ghost">Reset</button></div>
+          <div class="card"><div class="name">Ads (Reward)</div><button id="btnReward" class="btn">Watch Ad (Mock)</button></div>
+          <div class="card"><div class="name">IAP (Skin Pack)</div><button id="btnIAP" class="btn">Buy (Mock)</button></div>
+        </div>
       </div>
     </div>
   </div>
-  <canvas id="game" width="960" height="540"></canvas>
+
   <script type="module" src="./src/main.js"></script>
   <script>
     if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js').catch(e=>console.warn('SW failed', e));
-      });
+      window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js'));
     }
   </script>
 </body>

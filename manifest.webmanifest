@@ -1,10 +1,10 @@
 {
-  "name": "Cartoon Cat Survivor",
-  "short_name": "CatSurvivor",
+  "name": "Neko Swarm v3",
+  "short_name": "NekoSwarm",
   "start_url": ".",
   "display": "standalone",
-  "background_color": "#0b1020",
-  "theme_color": "#1e1b4b",
+  "background_color": "#0a0f23",
+  "theme_color": "#0b122d",
   "icons": [
     {
       "src": "assets/icons/icon-192.png",

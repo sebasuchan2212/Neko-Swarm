@@ -4,4 +4,5 @@ export const AllPerks=[
   { key:'speed', name:'Quick Paws', desc:'+15% move speed', apply:p=>p.speed=Math.round(p.speed*1.15) },
   { key:'pierce', name:'Sharp Claws', desc:'+1 bullet pierce', apply:p=>p.pierce+=1 },
   { key:'vital', name:'Thick Fur', desc:'+20 max HP', apply:p=>{ p.maxHp+=20; p.hp+=20; } },
+  { key:'minion', name:'Rescue Buddy', desc:'Gain +1 ally minion', apply:(p,world)=>{ world.addMinion(); } },
 ];
